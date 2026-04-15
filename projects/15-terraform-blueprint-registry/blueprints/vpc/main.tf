@@ -2,8 +2,21 @@ data "aws_availability_zones" "available" {
   state = "available"
 }
 
+locals {
+  public_subnets = [
+    cidrsubnet(var.cidr_block, 4, 0),
+    cidrsubnet(var.cidr_block, 4, 1)
+  ]
+}
+
 resource "aws_vpc" "this" {
-  cidr_block = var.cidr_block
+  cidr_block           = var.cidr_block
+  enable_dns_support   = true
+  enable_dns_hostnames = true
+
+  tags = {
+    Name = var.name
+  }
 }
 
 resource "aws_internet_gateway" "this" {
@@ -11,9 +24,9 @@ resource "aws_internet_gateway" "this" {
 }
 
 resource "aws_subnet" "public" {
-  count                   = 2
+  count                   = length(local.public_subnets)
   vpc_id                  = aws_vpc.this.id
-  cidr_block              = cidrsubnet(var.cidr_block, 4, count.index)
+  cidr_block              = local.public_subnets[count.index]
   availability_zone       = data.aws_availability_zones.available.names[count.index]
   map_public_ip_on_launch = true
 }

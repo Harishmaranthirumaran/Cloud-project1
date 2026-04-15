@@ -1,0 +1,49 @@
+name: Terraform Portfolio
+
+on:
+  push:
+    paths:
+      - "projects/**/infra/**/*.tf"
+      - "projects/**/infra/**/*.tfvars.example"
+      - ".github/workflows/terraform-portfolio.yml"
+  pull_request:
+    paths:
+      - "projects/**/infra/**/*.tf"
+      - "projects/**/infra/**/*.tfvars.example"
+      - ".github/workflows/terraform-portfolio.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project:
+          - projects/04-landing-zone-starter/infra
+          - projects/05-eks-platform-starter/infra
+          - projects/06-observability-platform/infra
+          - projects/08-ai-ops-incident-copilot/infra
+          - projects/09-multi-account-security-guardrails/infra
+          - projects/10-disaster-recovery-resilience-platform/infra
+          - projects/11-event-driven-integration-factory/infra
+          - projects/12-data-analytics-lakehouse-platform/infra
+          - projects/13-global-active-active-app-platform/infra
+          - projects/14-kubernetes-gitops-platform/infra
+          - projects/15-terraform-blueprint-registry/environments/dev
+          - projects/15-terraform-blueprint-registry/environments/prod
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.8.5
+
+      - name: Terraform fmt
+        run: terraform -chdir=${{ matrix.project }} fmt -check -recursive
+
+      - name: Terraform init
+        run: terraform -chdir=${{ matrix.project }} init -backend=false
+
+      - name: Terraform validate
+        run: terraform -chdir=${{ matrix.project }} validate

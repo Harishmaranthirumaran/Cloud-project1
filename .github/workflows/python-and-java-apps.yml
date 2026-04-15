@@ -1,0 +1,57 @@
+name: Python and Java Apps
+
+on:
+  push:
+    paths:
+      - "projects/14-kubernetes-gitops-platform/services/sample-api/**"
+      - "projects/17-jenkins-cicd-pipeline-factory/app/**"
+      - "projects/18-maven-cloud-service/app/**"
+      - ".github/workflows/python-and-java-apps.yml"
+  pull_request:
+    paths:
+      - "projects/14-kubernetes-gitops-platform/services/sample-api/**"
+      - "projects/17-jenkins-cicd-pipeline-factory/app/**"
+      - "projects/18-maven-cloud-service/app/**"
+      - ".github/workflows/python-and-java-apps.yml"
+
+jobs:
+  python-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app_dir:
+          - projects/14-kubernetes-gitops-platform/services/sample-api
+          - projects/17-jenkins-cicd-pipeline-factory/app
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r "${{ matrix.app_dir }}/requirements.txt"
+
+      - name: Run tests
+        run: |
+          cd "${{ matrix.app_dir }}"
+          pytest
+
+  maven-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      - name: Run Maven tests
+        working-directory: projects/18-maven-cloud-service/app
+        run: mvn test

@@ -1,0 +1,31 @@
+name: Jenkins Pipeline Check
+
+on:
+  push:
+    paths:
+      - "projects/17-jenkins-cicd-pipeline-factory/**"
+      - ".github/workflows/jenkins-check.yml"
+  pull_request:
+    paths:
+      - "projects/17-jenkins-cicd-pipeline-factory/**"
+      - ".github/workflows/jenkins-check.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate Jenkinsfile structure
+        run: |
+          grep -q '^pipeline {' projects/17-jenkins-cicd-pipeline-factory/Jenkinsfile
+          grep -q "stage('Checkout')" projects/17-jenkins-cicd-pipeline-factory/Jenkinsfile
+          grep -q "stage('Deploy')" projects/17-jenkins-cicd-pipeline-factory/Jenkinsfile
+
+      - name: Shell syntax check
+        run: |
+          bash -n projects/17-jenkins-cicd-pipeline-factory/ci/scripts/lint.sh
+          bash -n projects/17-jenkins-cicd-pipeline-factory/ci/scripts/test.sh
+          bash -n projects/17-jenkins-cicd-pipeline-factory/ci/scripts/build.sh
+          bash -n projects/17-jenkins-cicd-pipeline-factory/ci/scripts/deploy.sh

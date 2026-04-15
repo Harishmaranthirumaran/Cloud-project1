@@ -1,0 +1,6 @@
+---
+- name: Apply baseline hardening
+  hosts: all
+  become: true
+  roles:
+    - monitoring

@@ -1,0 +1,72 @@
+pipeline {
+  agent any
+
+  environment {
+    APP_NAME = "jenkins-sample-api"
+    AWS_REGION = "us-east-1"
+    ECR_REPOSITORY = "123456789012.dkr.ecr.us-east-1.amazonaws.com/jenkins-sample-api"
+    IMAGE_TAG = "${env.BUILD_NUMBER}"
+  }
+
+  options {
+    timestamps()
+    disableConcurrentBuilds()
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+
+    stage('Lint') {
+      steps {
+        sh 'bash ./ci/scripts/lint.sh'
+      }
+    }
+
+    stage('Test') {
+      steps {
+        sh 'bash ./ci/scripts/test.sh'
+        sh 'cd app && python -m pytest'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh 'bash ./ci/scripts/build.sh'
+      }
+    }
+
+    stage('Docker Build') {
+      steps {
+        sh 'docker build -t ${ECR_REPOSITORY}:${IMAGE_TAG} ./app'
+      }
+    }
+
+    stage('Scan') {
+      steps {
+        sh 'echo "Run image scan here"'
+      }
+    }
+
+    stage('Push') {
+      steps {
+        sh 'docker push ${ECR_REPOSITORY}:${IMAGE_TAG}'
+      }
+    }
+
+    stage('Deploy') {
+      steps {
+        sh 'bash ./ci/scripts/deploy.sh ${IMAGE_TAG}'
+      }
+    }
+  }
+
+  post {
+    always {
+      archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
+    }
+  }
+}

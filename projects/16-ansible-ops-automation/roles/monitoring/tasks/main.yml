@@ -1,0 +1,7 @@
+---
+- name: Install node exporter helpers
+  ansible.builtin.package:
+    name:
+      - python3
+      - procps
+    state: present

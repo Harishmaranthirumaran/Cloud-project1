@@ -1,0 +1,11 @@
+---
+- name: Update package metadata
+  ansible.builtin.package:
+    name: "{{ common_packages }}"
+    state: present
+
+- name: Ensure timezone is set
+  ansible.builtin.command:
+    cmd: timedatectl set-timezone Asia/Kolkata
+  when: ansible_service_mgr == "systemd"
+  changed_when: false

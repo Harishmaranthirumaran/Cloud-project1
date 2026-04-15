@@ -1,0 +1,3 @@
+region             = "us-east-1"
+project_name       = "observability"
+retention_in_days  = 30
