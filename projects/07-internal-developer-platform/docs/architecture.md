@@ -1,0 +1,6 @@
+# Architecture
+
+- Reusable platform modules expose network, compute, registry, secrets, and observability primitives.
+- Sample service deploys through the same pipeline as real services.
+- Promotions move from dev to stage to prod.
+

@@ -1,0 +1,4 @@
+project_name      = "ecs-fargate-app"
+aws_region        = "ap-south-1"
+environment_name  = "dev"
+
