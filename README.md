@@ -24,13 +24,19 @@ This repository is now organized as a pack of separate AWS project folders.
 | [`projects/16-ansible-ops-automation`](projects/16-ansible-ops-automation) | Ansible Ops Automation | DevOps / SRE Engineer | Idempotent EC2 bootstrap, patching, and hardening with Ansible. |
 | [`projects/17-jenkins-cicd-pipeline-factory`](projects/17-jenkins-cicd-pipeline-factory) | Jenkins CI/CD Pipeline Factory | DevOps / Build Engineer | Declarative pipelines, gated releases, quality checks, and artifact promotion. |
 | [`projects/18-maven-cloud-service`](projects/18-maven-cloud-service) | Maven Cloud Service | Java / Cloud Engineer | Spring Boot service built with Maven, containerized, and ready for AWS deployment. |
+| [`projects/19-s3-storage-governance-platform`](projects/19-s3-storage-governance-platform) | S3 Storage Governance Platform | Cloud Storage / Security Engineer | Versioning, encryption, lifecycle, logging, and access control for S3 at scale. |
+| [`projects/20-vpc-network-foundation-platform`](projects/20-vpc-network-foundation-platform) | VPC Network Foundation Platform | Senior Cloud / Network Engineer | VPC, subnets, NAT, endpoints, route tables, and flow logs for a reusable network core. |
+| [`projects/21-kms-encryption-and-secrets-platform`](projects/21-kms-encryption-and-secrets-platform) | KMS Encryption and Secrets Platform | Cloud Security / DevOps Engineer | Multi-purpose KMS design with aliases, key policies, SSM parameters, and Secrets Manager. |
+| [`projects/22-policy-as-code-security-gates`](projects/22-policy-as-code-security-gates) | Policy as Code Security Gates | DevSecOps Engineer | OPA/Conftest-style checks, Terraform policy rules, and pipeline enforcement. |
+| [`projects/23-iam-identity-boundary-platform`](projects/23-iam-identity-boundary-platform) | IAM Identity Boundary Platform | Cloud Security / IAM Engineer | Least-privilege roles, permission boundaries, OIDC, and access patterns. |
+| [`projects/24-backup-restore-governance-platform`](projects/24-backup-restore-governance-platform) | Backup and Restore Governance Platform | Senior Cloud / Reliability Engineer | AWS Backup, restore validation, S3 protections, and operational recovery patterns. |
 
 ## Current status
 
 - Project 1 is the most complete implementation and includes full Terraform, docs, workflow templates, remote state bootstrap, WAF, and environment examples.
-- Projects 4 through 18 now include Terraform entrypoints, platform scaffolds, or deployment pipelines in addition to their briefs and supporting docs.
+- Projects 4 through 24 now include Terraform entrypoints, platform scaffolds, deployment pipelines, or policy automation in addition to their briefs and supporting docs.
 - The new projects emphasize senior-level AWS DevOps and AIOps themes: security guardrails, incident automation, resilience, event-driven integration, data platforms, and global delivery.
-- The added projects extend the showcase into Kubernetes, Terraform modular design, Ansible, Jenkins, and Maven-based Java delivery.
+- The added projects extend the showcase into Kubernetes, Terraform modular design, Ansible, Jenkins, Maven-based Java delivery, storage governance, network foundations, KMS/secrets, policy-as-code, IAM boundaries, and backup governance.
 
 ## How to use this repo
 

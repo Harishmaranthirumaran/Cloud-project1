@@ -1,0 +1,3 @@
+region = "us-east-1"
+project_name = "network-foundation"
+vpc_cidr = "10.70.0.0/16"

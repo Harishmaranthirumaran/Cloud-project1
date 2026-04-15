@@ -8,6 +8,7 @@ Use this folder as the launcher for the portfolio packs. Each project is designe
 - Governance and platform engineering: `04` to `07`
 - Senior portfolio projects: `08` to `13`
 - Tooling and delivery projects: `14` to `18`
+- Core AWS control plane projects: `19` to `24`
 - Terraform roots now exist across the governance, platform, and senior tracks so each folder can act as a real starter stack.
 
 ## Suggested order
@@ -17,3 +18,4 @@ Use this folder as the launcher for the portfolio packs. Each project is designe
 3. Use `04-landing-zone-starter`, `05-eks-platform-starter`, `06-observability-platform`, and `07-internal-developer-platform` to show platform maturity.
 4. Finish with the new senior projects for security, AIOps, resilience, data, and multi-region delivery.
 5. Use `14` through `18` to show Kubernetes, Terraform module design, Ansible automation, Jenkins pipelines, and Java build tooling.
+6. Use `19` through `24` to show storage governance, networking, encryption, policy-as-code, IAM, and backup operations.

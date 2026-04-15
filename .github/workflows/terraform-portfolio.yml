@@ -31,6 +31,11 @@ jobs:
           - projects/14-kubernetes-gitops-platform/infra
           - projects/15-terraform-blueprint-registry/environments/dev
           - projects/15-terraform-blueprint-registry/environments/prod
+          - projects/19-s3-storage-governance-platform/infra
+          - projects/20-vpc-network-foundation-platform/infra
+          - projects/21-kms-encryption-and-secrets-platform/infra
+          - projects/23-iam-identity-boundary-platform/infra
+          - projects/24-backup-restore-governance-platform/infra
 
     steps:
       - uses: actions/checkout@v4

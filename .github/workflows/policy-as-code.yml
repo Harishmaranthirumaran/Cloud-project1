@@ -1,0 +1,28 @@
+name: Policy as Code
+
+on:
+  push:
+    paths:
+      - "projects/22-policy-as-code-security-gates/**"
+      - ".github/workflows/policy-as-code.yml"
+  pull_request:
+    paths:
+      - "projects/22-policy-as-code-security-gates/**"
+      - ".github/workflows/policy-as-code.yml"
+
+jobs:
+  conftest:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Conftest
+        run: |
+          curl -L -o /tmp/conftest.tar.gz https://github.com/open-policy-agent/conftest/releases/download/v0.60.0/conftest_0.60.0_Linux_x86_64.tar.gz
+          tar -xzf /tmp/conftest.tar.gz -C /tmp
+          sudo mv /tmp/conftest /usr/local/bin/conftest
+
+      - name: Run policy checks
+        working-directory: projects/22-policy-as-code-security-gates
+        run: conftest test examples/ --policy policies/

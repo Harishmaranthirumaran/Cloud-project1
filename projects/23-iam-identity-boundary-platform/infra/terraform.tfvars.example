@@ -1,0 +1,3 @@
+region = "us-east-1"
+project_name = "iam-boundary"
+github_repo = "example/cloud-project1"
