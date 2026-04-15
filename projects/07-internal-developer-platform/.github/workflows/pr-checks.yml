@@ -8,15 +8,29 @@ on:
       - ".github/workflows/pr-checks.yml"
 
 jobs:
-  test:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform fmt
+        working-directory: platform
+        run: terraform fmt -check -recursive
+
+      - name: Terraform init
+        working-directory: platform
+        run: terraform init -backend=false
+
+      - name: Terraform validate
+        working-directory: platform
+        run: terraform validate
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+
       - name: Test sample API
         working-directory: services/sample-api
         run: npm test
-

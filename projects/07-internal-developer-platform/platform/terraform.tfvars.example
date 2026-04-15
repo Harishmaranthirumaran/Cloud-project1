@@ -1,6 +1,17 @@
-project_name      = "internal-developer-platform"
-environment_name  = "dev"
-aws_region        = "ap-south-1"
-domain_name       = ""
-enable_waf        = true
-
+project_name        = "internal-developer-platform"
+environment_name    = "dev"
+aws_region          = "ap-south-1"
+vpc_cidr            = "10.40.0.0/16"
+public_subnet_cidrs = ["10.40.1.0/24", "10.40.2.0/24"]
+container_port      = 3000
+task_cpu            = 256
+task_memory         = 512
+desired_count       = 2
+min_desired_count   = 2
+max_desired_count   = 4
+image_tag           = "latest"
+domain_name         = ""
+hosted_zone_name    = ""
+hosted_zone_id      = ""
+github_repo         = "Harishmaranthirumaran/Cloud-project1"
+enable_waf          = true

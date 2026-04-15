@@ -1,8 +1,20 @@
 module "platform" {
-  source           = "../../"
-  project_name     = "internal-developer-platform"
-  environment_name = "dev"
-  aws_region       = "ap-south-1"
-  enable_waf       = false
+  source              = "../../"
+  project_name        = var.project_name
+  environment_name    = var.environment_name
+  aws_region          = var.aws_region
+  vpc_cidr            = var.vpc_cidr
+  public_subnet_cidrs  = var.public_subnet_cidrs
+  container_port      = var.container_port
+  task_cpu            = var.task_cpu
+  task_memory         = var.task_memory
+  desired_count       = var.desired_count
+  min_desired_count   = var.min_desired_count
+  max_desired_count   = var.max_desired_count
+  image_tag           = var.image_tag
+  domain_name         = var.domain_name
+  hosted_zone_name    = var.hosted_zone_name
+  hosted_zone_id      = var.hosted_zone_id
+  github_repo         = var.github_repo
+  enable_waf          = var.enable_waf
 }
-

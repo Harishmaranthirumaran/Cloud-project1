@@ -52,3 +52,13 @@ projects/07-internal-developer-platform/
 - Bootstrap remote state once, then use the environment examples in `platform/environments/dev`, `platform/environments/stage`, and `platform/environments/prod`.
 - Run each environment from its own folder so state, variables, and promotion steps stay explicit.
 - Use `dev` for automatic deploys, `stage` for validation, and `prod` for approval-gated releases.
+- Set these repository variables after you apply Terraform:
+  - `AWS_REGION`
+  - `ECR_REPOSITORY_URI`
+  - `ECS_CLUSTER_NAME`
+  - `ECS_SERVICE_NAME`
+  - `ECS_CLUSTER_NAME_STAGE`
+  - `ECS_SERVICE_NAME_STAGE`
+  - `ECS_CLUSTER_NAME_PROD`
+  - `ECS_SERVICE_NAME_PROD`
+- Set `AWS_ROLE_TO_ASSUME` as a repository secret for workflow authentication.
