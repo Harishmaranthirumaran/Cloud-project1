@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="AWS static website hosting platform with CloudFront, S3, Route 53, and GitHub Actions."
+    />
+    <title>Aurora Static Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">AWS Static Website Platform</p>
+        <h1>Fast delivery, private origin, clean deploys.</h1>
+        <p class="lede">
+          A production-style static site stack with CloudFront, S3, Route 53,
+          ACM, and GitHub Actions.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#platform">Explore stack</a>
+          <a class="button secondary" href="#workflow">Deployment flow</a>
+        </div>
+      </section>
+
+      <section class="grid" id="platform">
+        <article class="card highlight">
+          <span class="label">Origin</span>
+          <h2>Private S3 bucket</h2>
+          <p>
+            Stores static assets behind CloudFront Origin Access Control so the
+            bucket is not public.
+          </p>
+        </article>
+        <article class="card">
+          <span class="label">Delivery</span>
+          <h2>CloudFront CDN</h2>
+          <p>
+            Adds TLS, caching, and edge delivery for a better first-byte
+            experience.
+          </p>
+        </article>
+        <article class="card">
+          <span class="label">DNS</span>
+          <h2>Route 53 optional</h2>
+          <p>
+            Custom domain support is available when you are ready to attach a
+            hosted zone.
+          </p>
+        </article>
+        <article class="card">
+          <span class="label">Deploy</span>
+          <h2>GitHub Actions</h2>
+          <p>
+            OIDC-based deploys keep credentials out of the repo and invalidate
+            the CDN after upload.
+          </p>
+        </article>
+      </section>
+
+      <section class="workflow" id="workflow">
+        <h2>Deployment flow</h2>
+        <ol>
+          <li>GitHub Actions authenticates to AWS with OIDC.</li>
+          <li>The workflow syncs `app/` contents to S3.</li>
+          <li>CloudFront invalidation refreshes the live site.</li>
+          <li>Users receive cached content at the edge.</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span id="year"></span> Aurora Static Platform
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
+
