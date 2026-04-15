@@ -1,0 +1,3 @@
+project_name = "aws-static-site-platform"
+aws_region   = "ap-south-1"
+

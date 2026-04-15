@@ -4,10 +4,10 @@
 *.tfstate.*
 *.tfvars
 *.tfvars.json
+infra/backend.hcl
 .DS_Store
 dist/
 build/
 node_modules/
 coverage/
 *.log
-

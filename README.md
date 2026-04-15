@@ -41,20 +41,33 @@ docs/
 
 ## Quick start
 
-1. Set up AWS credentials for Terraform bootstrap or use your existing AWS auth.
-2. Copy the example Terraform vars.
-3. Run Terraform from the `infra/` directory.
-4. Add the required GitHub secrets for deployment.
-
-### Terraform
+### 1. Bootstrap remote state
 
 ```bash
-cd infra
+cd infra/bootstrap
 cp terraform.tfvars.example terraform.tfvars
 terraform init
+terraform apply
+```
+
+Record the bucket and table names from the outputs, then create `infra/backend.hcl` from `infra/backend.hcl.example`.
+
+### 2. Initialize the main stack with remote state
+
+```bash
+cd ..
+cp backend.hcl.example backend.hcl
+terraform init -backend-config=backend.hcl
 terraform plan
 terraform apply
 ```
+
+### 3. Configure GitHub Actions deployment
+
+1. Set up AWS credentials for Terraform bootstrap or use your existing AWS auth.
+2. Copy `infra/terraform.tfvars.example` to `infra/terraform.tfvars` and fill in any optional domain values.
+3. Set the GitHub repository secrets or variables listed below.
+4. Push to `main` to trigger the deploy workflow.
 
 ### GitHub Actions deploy
 
@@ -83,4 +96,3 @@ If you enable a custom domain:
 - CloudFront invalidation is included in deploys.
 - ACM certificate validation is only created when a domain name and hosted zone are provided.
 - Route 53 records are optional and can be enabled later.
-
