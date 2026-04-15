@@ -8,8 +8,8 @@ module "network" {
 }
 
 resource "aws_iam_role" "cluster" {
-  count              = var.cluster_role_arn == "" ? 1 : 0
-  name               = "${local.resource_prefix}-cluster"
+  count = var.cluster_role_arn == "" ? 1 : 0
+  name  = "${local.resource_prefix}-cluster"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{

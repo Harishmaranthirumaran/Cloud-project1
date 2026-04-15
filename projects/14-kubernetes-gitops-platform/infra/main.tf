@@ -4,7 +4,7 @@ data "aws_availability_zones" "available" {
 
 locals {
   resource_prefix = lower(replace(var.project_name, "_", "-"))
-  public_subnets  = [
+  public_subnets = [
     cidrsubnet(var.vpc_cidr, 4, 0),
     cidrsubnet(var.vpc_cidr, 4, 1)
   ]

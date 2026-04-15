@@ -108,7 +108,7 @@ resource "aws_sfn_state_machine" "triage" {
         Resource = "arn:aws:states:::sns:publish"
         Parameters = {
           TopicArn = aws_sns_topic.incident.arn
-          Message = "AIOps incident triage started"
+          Message  = "AIOps incident triage started"
         }
         End = true
       }
@@ -138,8 +138,8 @@ resource "aws_iam_role_policy" "events" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect = "Allow"
-      Action = "states:StartExecution"
+      Effect   = "Allow"
+      Action   = "states:StartExecution"
       Resource = aws_sfn_state_machine.triage.arn
     }]
   })
@@ -150,7 +150,7 @@ resource "aws_cloudwatch_event_rule" "incident" {
   description = "Route critical CloudWatch alarm events into the AIOps flow"
 
   event_pattern = jsonencode({
-    source      = ["aws.cloudwatch"]
+    source        = ["aws.cloudwatch"]
     "detail-type" = ["CloudWatch Alarm State Change"]
     detail = {
       state = {

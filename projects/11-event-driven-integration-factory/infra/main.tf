@@ -58,13 +58,13 @@ resource "aws_iam_role_policy" "stepfunctions" {
     Version = "2012-10-17"
     Statement = [
       {
-        Effect = "Allow"
-        Action = ["dynamodb:PutItem"]
+        Effect   = "Allow"
+        Action   = ["dynamodb:PutItem"]
         Resource = aws_dynamodb_table.workflow.arn
       },
       {
-        Effect = "Allow"
-        Action = ["sns:Publish"]
+        Effect   = "Allow"
+        Action   = ["sns:Publish"]
         Resource = aws_sns_topic.notifications.arn
       }
     ]
@@ -99,7 +99,7 @@ resource "aws_sfn_state_machine" "workflow" {
         Resource = "arn:aws:states:::sns:publish"
         Parameters = {
           TopicArn = aws_sns_topic.notifications.arn
-          Message = "Workflow event processed"
+          Message  = "Workflow event processed"
         }
         End = true
       }
@@ -133,8 +133,8 @@ resource "aws_iam_role_policy" "events" {
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect = "Allow"
-      Action = "states:StartExecution"
+      Effect   = "Allow"
+      Action   = "states:StartExecution"
       Resource = aws_sfn_state_machine.workflow.arn
     }]
   })
@@ -145,7 +145,7 @@ resource "aws_cloudwatch_event_rule" "integration" {
   event_bus_name = aws_cloudwatch_event_bus.integration.name
 
   event_pattern = jsonencode({
-    source         = ["com.example.orders"]
+    source        = ["com.example.orders"]
     "detail-type" = ["OrderCreated"]
   })
 }

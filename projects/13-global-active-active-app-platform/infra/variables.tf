@@ -14,7 +14,7 @@ variable "project_name" {
 }
 
 variable "hosted_zone_id" {
-  type    = string
+  type = string
 }
 
 variable "record_name" {

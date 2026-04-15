@@ -87,8 +87,8 @@ resource "aws_route53_health_check" "primary" {
   port              = 443
   type              = "HTTPS"
   resource_path     = "/"
-  failure_threshold  = 3
-  request_interval   = 30
+  failure_threshold = 3
+  request_interval  = 30
 }
 
 resource "aws_route53_health_check" "secondary" {
@@ -96,8 +96,8 @@ resource "aws_route53_health_check" "secondary" {
   port              = 443
   type              = "HTTPS"
   resource_path     = "/"
-  failure_threshold  = 3
-  request_interval   = 30
+  failure_threshold = 3
+  request_interval  = 30
 }
 
 resource "aws_route53_record" "primary" {
@@ -107,10 +107,10 @@ resource "aws_route53_record" "primary" {
   type    = "CNAME"
   ttl     = 60
 
-  set_identifier = "primary"
-  failover       = "PRIMARY"
+  set_identifier  = "primary"
+  failover        = "PRIMARY"
   health_check_id = aws_route53_health_check.primary.id
-  records        = [var.primary_endpoint]
+  records         = [var.primary_endpoint]
 }
 
 resource "aws_route53_record" "secondary" {
@@ -120,8 +120,8 @@ resource "aws_route53_record" "secondary" {
   type    = "CNAME"
   ttl     = 60
 
-  set_identifier = "secondary"
-  failover       = "SECONDARY"
+  set_identifier  = "secondary"
+  failover        = "SECONDARY"
   health_check_id = aws_route53_health_check.secondary.id
-  records        = [var.secondary_endpoint]
+  records         = [var.secondary_endpoint]
 }

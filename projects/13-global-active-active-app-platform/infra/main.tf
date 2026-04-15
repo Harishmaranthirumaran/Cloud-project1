@@ -30,9 +30,9 @@ resource "aws_globalaccelerator_endpoint_group" "primary" {
 }
 
 resource "aws_globalaccelerator_endpoint_group" "secondary" {
-  listener_arn          = aws_globalaccelerator_listener.this.id
-  endpoint_group_region = var.secondary_region
-  health_check_port     = 443
+  listener_arn            = aws_globalaccelerator_listener.this.id
+  endpoint_group_region   = var.secondary_region
+  health_check_port       = 443
   traffic_dial_percentage = 0
 
   endpoint_configuration {
@@ -60,23 +60,23 @@ resource "aws_route53_health_check" "secondary" {
 }
 
 resource "aws_route53_record" "primary" {
-  zone_id        = var.hosted_zone_id
-  name           = var.record_name
-  type           = "CNAME"
-  ttl            = 60
-  set_identifier = "primary"
-  failover       = "PRIMARY"
+  zone_id         = var.hosted_zone_id
+  name            = var.record_name
+  type            = "CNAME"
+  ttl             = 60
+  set_identifier  = "primary"
+  failover        = "PRIMARY"
   health_check_id = aws_route53_health_check.primary.id
-  records        = [var.primary_endpoint_fqdn]
+  records         = [var.primary_endpoint_fqdn]
 }
 
 resource "aws_route53_record" "secondary" {
-  zone_id        = var.hosted_zone_id
-  name           = var.record_name
-  type           = "CNAME"
-  ttl            = 60
-  set_identifier = "secondary"
-  failover       = "SECONDARY"
+  zone_id         = var.hosted_zone_id
+  name            = var.record_name
+  type            = "CNAME"
+  ttl             = 60
+  set_identifier  = "secondary"
+  failover        = "SECONDARY"
   health_check_id = aws_route53_health_check.secondary.id
-  records        = [var.secondary_endpoint_fqdn]
+  records         = [var.secondary_endpoint_fqdn]
 }
