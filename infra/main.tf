@@ -2,7 +2,8 @@ locals {
   workspace_name   = terraform.workspace == "default" ? var.environment_name : terraform.workspace
   resource_prefix  = lower(replace("${var.project_name}-${local.workspace_name}", "_", "-"))
   site_bucket_name  = lower(replace("${local.resource_prefix}-${random_id.suffix.hex}", "_", "-"))
-  domain_enabled    = var.domain_name != "" && var.hosted_zone_id != ""
+  domain_enabled   = var.domain_name != "" && (var.hosted_zone_id != "" || var.hosted_zone_name != "")
+  hosted_zone_id   = var.hosted_zone_id != "" ? var.hosted_zone_id : try(data.aws_route53_zone.site[0].zone_id, "")
 }
 
 resource "random_id" "suffix" {
@@ -53,6 +54,12 @@ resource "aws_cloudfront_origin_access_control" "site" {
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
+}
+
+data "aws_route53_zone" "site" {
+  count = var.hosted_zone_name != "" && var.hosted_zone_id == "" ? 1 : 0
+  name  = trimsuffix(var.hosted_zone_name, ".")
+  private_zone = false
 }
 
 resource "aws_cloudfront_response_headers_policy" "site" {
@@ -198,7 +205,7 @@ resource "aws_route53_record" "acm_validation" {
     }
   } : {}
 
-  zone_id = var.hosted_zone_id
+  zone_id = local.hosted_zone_id
   name    = each.value.name
   type    = each.value.type
   ttl     = 60

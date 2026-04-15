@@ -22,6 +22,12 @@ variable "domain_name" {
   default     = ""
 }
 
+variable "hosted_zone_name" {
+  description = "Optional Route 53 hosted zone name used to look up the hosted zone ID."
+  type        = string
+  default     = ""
+}
+
 variable "hosted_zone_id" {
   description = "Optional Route 53 hosted zone ID for the custom domain."
   type        = string

@@ -1,7 +1,7 @@
 resource "aws_route53_record" "site" {
   count = local.domain_enabled ? 1 : 0
 
-  zone_id = var.hosted_zone_id
+  zone_id = local.hosted_zone_id
   name    = var.domain_name
   type    = "A"
 
@@ -15,7 +15,7 @@ resource "aws_route53_record" "site" {
 resource "aws_route53_record" "site_ipv6" {
   count = local.domain_enabled ? 1 : 0
 
-  zone_id = var.hosted_zone_id
+  zone_id = local.hosted_zone_id
   name    = var.domain_name
   type    = "AAAA"
 
@@ -25,4 +25,3 @@ resource "aws_route53_record" "site_ipv6" {
     evaluate_target_health = false
   }
 }
-

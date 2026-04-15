@@ -6,6 +6,7 @@
 2. Select the correct Terraform workspace for the target environment.
 3. Run the GitHub Actions workflow or deploy manually with Terraform outputs.
 4. Invalidate CloudFront after upload.
+5. For a custom domain, set either `hosted_zone_id` or `hosted_zone_name` before applying.
 
 ## Rollback
 

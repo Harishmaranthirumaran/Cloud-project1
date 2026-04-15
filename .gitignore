@@ -5,6 +5,8 @@
 *.tfvars
 *.tfvars.json
 infra/backend.hcl
+infra/environments/**/backend.hcl
+infra/environments/**/terraform.tfvars
 .DS_Store
 dist/
 build/

@@ -17,6 +17,7 @@
 
 - Use ACM in `us-east-1` for CloudFront.
 - Add DNS validation only when a custom domain is enabled.
+- Prefer `hosted_zone_name` when you want Terraform to look up the public hosted zone automatically.
 
 ## Edge protection
 

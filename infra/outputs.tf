@@ -18,6 +18,10 @@ output "website_url" {
   value = local.domain_enabled ? "https://${var.domain_name}" : "https://${aws_cloudfront_distribution.site.domain_name}"
 }
 
+output "hosted_zone_id" {
+  value = local.hosted_zone_id
+}
+
 output "github_deploy_role_arn" {
   value       = try(aws_iam_role.github_deploy[0].arn, null)
   description = "ARN for the GitHub Actions deploy role."

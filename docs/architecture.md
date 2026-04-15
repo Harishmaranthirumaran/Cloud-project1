@@ -19,6 +19,7 @@ The platform uses a private S3 bucket as the origin for a CloudFront distributio
 - S3 is private by default.
 - CloudFront uses OAC instead of public bucket access.
 - Custom DNS is optional so the project is usable without a domain.
+- If only the hosted zone name is known, Terraform looks up the Route 53 zone ID automatically.
 - Deployment uses GitHub Actions OIDC instead of long-lived AWS keys.
 - Terraform workspaces separate `dev` and `prod` resource prefixes while reusing the same code.
 

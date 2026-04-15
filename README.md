@@ -37,6 +37,7 @@ docs/
 
 - [`docs/backlog.md`](/Users/harishmaran/Documents/Cloud-project1/docs/backlog.md)
 - [`docs/milestones.md`](/Users/harishmaran/Documents/Cloud-project1/docs/milestones.md)
+- [`CHANGELOG.md`](/Users/harishmaran/Documents/Cloud-project1/CHANGELOG.md)
 
 ## Assumptions
 
@@ -62,11 +63,40 @@ Record the bucket and table names from the outputs, then create `infra/backend.h
 
 ```bash
 cd ..
-cp backend.hcl.example backend.hcl
+cp infra/backend.hcl.example infra/backend.hcl
+cd infra
 terraform init -backend-config=backend.hcl
 terraform plan
 terraform apply
 ```
+
+For explicit environment files, use:
+
+- [`infra/environments/dev/backend.hcl.example`](/Users/harishmaran/Documents/Cloud-project1/infra/environments/dev/backend.hcl.example)
+- [`infra/environments/prod/backend.hcl.example`](/Users/harishmaran/Documents/Cloud-project1/infra/environments/prod/backend.hcl.example)
+
+To run `dev`:
+
+```bash
+cp infra/environments/dev/backend.hcl.example infra/environments/dev/backend.hcl
+cd infra
+terraform init -backend-config=environments/dev/backend.hcl
+terraform workspace select dev || terraform workspace new dev
+```
+
+To run `prod`:
+
+```bash
+cp infra/environments/prod/backend.hcl.example infra/environments/prod/backend.hcl
+cd infra
+terraform init -backend-config=environments/prod/backend.hcl
+terraform workspace select prod || terraform workspace new prod
+```
+
+Use the matching tfvars examples in the same directories:
+
+- [`infra/environments/dev/terraform.tfvars.example`](/Users/harishmaran/Documents/Cloud-project1/infra/environments/dev/terraform.tfvars.example)
+- [`infra/environments/prod/terraform.tfvars.example`](/Users/harishmaran/Documents/Cloud-project1/infra/environments/prod/terraform.tfvars.example)
 
 ### 3. Configure GitHub Actions deployment
 
@@ -91,12 +121,14 @@ If you enable a custom domain:
 
 - `DOMAIN_NAME`
 - `HOSTED_ZONE_ID`
+- `HOSTED_ZONE_NAME`
 
 ### Workspaces
 
 - `default` maps to the `environment_name` variable
 - `dev` and `prod` are separate workspaces with distinct resource prefixes
 - Use `terraform workspace select dev` before running `plan` or `apply` for that environment
+- If you only know the zone name, set `hosted_zone_name` and Terraform will look up the zone ID automatically
 
 ### Stretch goals included
 
