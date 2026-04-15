@@ -33,11 +33,17 @@ docs/
 .github/workflows/
 ```
 
+## Planning docs
+
+- [`docs/backlog.md`](/Users/harishmaran/Documents/Cloud-project1/docs/backlog.md)
+- [`docs/milestones.md`](/Users/harishmaran/Documents/Cloud-project1/docs/milestones.md)
+
 ## Assumptions
 
 - Default AWS region: `ap-south-1`
 - Custom domain is optional
 - The first deployment can run with only the S3 bucket and CloudFront distribution
+- Terraform workspaces are used for `dev` and `prod` environment separation
 
 ## Quick start
 
@@ -66,8 +72,11 @@ terraform apply
 
 1. Set up AWS credentials for Terraform bootstrap or use your existing AWS auth.
 2. Copy `infra/terraform.tfvars.example` to `infra/terraform.tfvars` and fill in any optional domain values.
-3. Set the GitHub repository secrets or variables listed below.
-4. Push to `main` to trigger the deploy workflow.
+3. Create and select a workspace:
+   - `terraform workspace new dev`
+   - `terraform workspace new prod`
+4. Set the GitHub repository secrets or variables listed below.
+5. Push to `main` to trigger the deploy workflow.
 
 ### GitHub Actions deploy
 
@@ -83,6 +92,19 @@ If you enable a custom domain:
 - `DOMAIN_NAME`
 - `HOSTED_ZONE_ID`
 
+### Workspaces
+
+- `default` maps to the `environment_name` variable
+- `dev` and `prod` are separate workspaces with distinct resource prefixes
+- Use `terraform workspace select dev` before running `plan` or `apply` for that environment
+
+### Stretch goals included
+
+- CloudFront WAF protection
+- Security headers via CloudFront response headers policy
+- Multi-environment support through Terraform workspaces
+- CloudFront invalidation in deployment
+
 ## Milestones
 
 1. Repository skeleton and docs
@@ -96,3 +118,4 @@ If you enable a custom domain:
 - CloudFront invalidation is included in deploys.
 - ACM certificate validation is only created when a domain name and hosted zone are provided.
 - Route 53 records are optional and can be enabled later.
+- Lighthouse performance checks run in GitHub Actions on pull requests.

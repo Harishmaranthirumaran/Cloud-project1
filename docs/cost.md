@@ -6,6 +6,7 @@
 - S3 storage and requests
 - Route 53 hosted zone if you add a custom domain
 - ACM certificates for CloudFront are free
+- WAF can add cost if you enable the production protections
 
 ## Cost controls
 
@@ -13,4 +14,4 @@
 - Use `PriceClass_100` for the cheapest CloudFront footprint.
 - Destroy unused test environments.
 - Avoid uploading large binaries to `app/`.
-
+- Disable WAF in test environments if cost or false positives become a concern.

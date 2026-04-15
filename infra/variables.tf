@@ -4,6 +4,12 @@ variable "project_name" {
   default     = "aws-static-site-platform"
 }
 
+variable "environment_name" {
+  description = "Default environment name used when Terraform runs in the default workspace."
+  type        = string
+  default     = "dev"
+}
+
 variable "aws_region" {
   description = "Primary AWS region."
   type        = string
@@ -34,3 +40,8 @@ variable "github_repo" {
   default     = ""
 }
 
+variable "enable_waf" {
+  description = "Enable CloudFront WAF protection."
+  type        = bool
+  default     = true
+}

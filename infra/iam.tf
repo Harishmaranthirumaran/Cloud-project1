@@ -39,7 +39,7 @@ resource "aws_iam_openid_connect_provider" "github" {
 
 resource "aws_iam_role" "github_deploy" {
   count              = var.github_repo != "" ? 1 : 0
-  name               = "${var.project_name}-github-deploy"
+  name               = "${local.resource_prefix}-github-deploy"
   assume_role_policy = data.aws_iam_policy_document.github_oidc_assume_role[0].json
 }
 
@@ -71,7 +71,7 @@ data "aws_iam_policy_document" "github_deploy" {
 
 resource "aws_iam_role_policy" "github_deploy" {
   count  = var.github_repo != "" ? 1 : 0
-  name   = "${var.project_name}-github-deploy"
+  name   = "${local.resource_prefix}-github-deploy"
   role   = aws_iam_role.github_deploy[0].id
   policy = data.aws_iam_policy_document.github_deploy[0].json
 }

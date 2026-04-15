@@ -1,0 +1,27 @@
+name: Lighthouse Performance
+
+on:
+  pull_request:
+    paths:
+      - "app/**"
+      - ".github/workflows/performance.yml"
+      - "lighthouserc.cjs"
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run Lighthouse CI
+        run: |
+          npm install --global @lhci/cli
+          lhci autorun --config=./lighthouserc.cjs
+

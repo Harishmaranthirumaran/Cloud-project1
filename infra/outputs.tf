@@ -2,6 +2,10 @@ output "bucket_name" {
   value = aws_s3_bucket.site.bucket
 }
 
+output "environment_name" {
+  value = local.workspace_name
+}
+
 output "cloudfront_distribution_id" {
   value = aws_cloudfront_distribution.site.id
 }
@@ -19,3 +23,6 @@ output "github_deploy_role_arn" {
   description = "ARN for the GitHub Actions deploy role."
 }
 
+output "waf_enabled" {
+  value = var.enable_waf
+}

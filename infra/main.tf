@@ -1,6 +1,8 @@
 locals {
-  site_bucket_name = lower(replace("${var.project_name}-${random_id.suffix.hex}", "_", "-"))
-  domain_enabled   = var.domain_name != "" && var.hosted_zone_id != ""
+  workspace_name   = terraform.workspace == "default" ? var.environment_name : terraform.workspace
+  resource_prefix  = lower(replace("${var.project_name}-${local.workspace_name}", "_", "-"))
+  site_bucket_name  = lower(replace("${local.resource_prefix}-${random_id.suffix.hex}", "_", "-"))
+  domain_enabled    = var.domain_name != "" && var.hosted_zone_id != ""
 }
 
 resource "random_id" "suffix" {
@@ -46,11 +48,107 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "site" {
 }
 
 resource "aws_cloudfront_origin_access_control" "site" {
-  name                              = "${var.project_name}-oac"
+  name                              = "${local.resource_prefix}-oac"
   description                       = "OAC for private S3 origin"
   origin_access_control_origin_type = "s3"
   signing_behavior                  = "always"
   signing_protocol                  = "sigv4"
+}
+
+resource "aws_cloudfront_response_headers_policy" "site" {
+  name    = "${local.resource_prefix}-headers"
+  comment = "Security headers for the static site"
+
+  security_headers_config {
+    content_type_options {
+      override = true
+    }
+
+    frame_options {
+      frame_option = "DENY"
+      override     = true
+    }
+
+    referrer_policy {
+      referrer_policy = "strict-origin-when-cross-origin"
+      override        = true
+    }
+
+    strict_transport_security {
+      access_control_max_age_sec = 31536000
+      include_subdomains         = true
+      preload                    = true
+      override                   = true
+    }
+
+    xss_protection {
+      protection = true
+      mode_block = true
+      override   = true
+    }
+  }
+}
+
+resource "aws_wafv2_web_acl" "site" {
+  provider    = aws.us_east_1
+  count       = var.enable_waf ? 1 : 0
+  name        = "${local.resource_prefix}-waf"
+  description = "WAF for the static site"
+  scope       = "CLOUDFRONT"
+
+  default_action {
+    allow {}
+  }
+
+  rule {
+    name     = "AWSManagedRulesCommonRuleSet"
+    priority = 1
+
+    override_action {
+      none {}
+    }
+
+    statement {
+      managed_rule_group_statement {
+        name        = "AWSManagedRulesCommonRuleSet"
+        vendor_name = "AWS"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${local.resource_prefix}-common"
+      sampled_requests_enabled    = true
+    }
+  }
+
+  rule {
+    name     = "RateLimit"
+    priority = 2
+
+    action {
+      block {}
+    }
+
+    statement {
+      rate_based_statement {
+        limit              = 2000
+        aggregate_key_type = "IP"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = "${local.resource_prefix}-rate-limit"
+      sampled_requests_enabled    = true
+    }
+  }
+
+  visibility_config {
+    cloudwatch_metrics_enabled = true
+    metric_name                = "${local.resource_prefix}-waf"
+    sampled_requests_enabled    = true
+  }
 }
 
 data "aws_iam_policy_document" "site_bucket" {
@@ -133,6 +231,7 @@ resource "aws_cloudfront_distribution" "site" {
     target_origin_id       = "s3-site-origin"
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
+    response_headers_policy_id = aws_cloudfront_response_headers_policy.site.id
 
     forwarded_values {
       query_string = false
@@ -157,4 +256,6 @@ resource "aws_cloudfront_distribution" "site" {
   }
 
   aliases = local.domain_enabled ? [var.domain_name] : []
+
+  web_acl_id = var.enable_waf ? aws_wafv2_web_acl.site[0].arn : null
 }

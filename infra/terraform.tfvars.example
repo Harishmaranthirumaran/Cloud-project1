@@ -1,6 +1,7 @@
 project_name   = "aws-static-site-platform"
+environment_name = "dev"
 aws_region     = "ap-south-1"
 domain_name    = ""
 hosted_zone_id = ""
 github_repo    = "Harishmaranthirumaran/Cloud-project1"
-
+enable_waf     = true
