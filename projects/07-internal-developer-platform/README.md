@@ -38,7 +38,7 @@ This is the capstone project. It combines application delivery, environment prom
 projects/07-internal-developer-platform/
 ├── platform/
 ├── services/
-├── gitops-or-ci/
+├── .github/workflows/
 ├── docs/
 └── README.md
 ```
@@ -47,3 +47,8 @@ projects/07-internal-developer-platform/
 
 > Help me build a production-style internal developer platform on AWS as a GitHub portfolio project. Use Terraform and GitHub Actions. Default to ECS Fargate unless there is a strong reason to pick EKS. I want a platform that supports one sample microservice, modular infrastructure, dev-stage-prod environments, CI/CD, image scanning, secrets management, observability, alarms, dashboards, and operational runbooks. Generate the repository in phases. For each phase, create production-style files, explain tradeoffs briefly, and keep the implementation practical for one engineer building a portfolio project.
 
+## Environment flow
+
+- Bootstrap remote state once, then use the environment examples in `platform/environments/dev`, `platform/environments/stage`, and `platform/environments/prod`.
+- Run each environment from its own folder so state, variables, and promotion steps stay explicit.
+- Use `dev` for automatic deploys, `stage` for validation, and `prod` for approval-gated releases.

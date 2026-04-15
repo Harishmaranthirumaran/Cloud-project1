@@ -1,7 +1,10 @@
 {
   "name": "sample-api",
+  "version": "0.1.0",
   "private": true,
   "type": "commonjs",
-  "scripts": { "start": "node src/index.js" }
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test"
+  }
 }
-

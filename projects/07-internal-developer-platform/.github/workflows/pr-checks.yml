@@ -1,0 +1,22 @@
+name: PR Checks
+
+on:
+  pull_request:
+    paths:
+      - "platform/**"
+      - "services/**"
+      - ".github/workflows/pr-checks.yml"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Test sample API
+        working-directory: services/sample-api
+        run: npm test
+

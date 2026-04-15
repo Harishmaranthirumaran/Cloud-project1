@@ -1,0 +1,6 @@
+project_name      = "internal-developer-platform"
+environment_name  = "dev"
+aws_region        = "ap-south-1"
+domain_name       = ""
+enable_waf        = true
+
