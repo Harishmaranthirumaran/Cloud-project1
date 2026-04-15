@@ -4,6 +4,7 @@ coverage/
 dist/
 build/
 node_modules/
+__pycache__/
 .terraform/
 *.tfstate
 *.tfstate.*
@@ -13,4 +14,3 @@ projects/**/infra/backend.hcl
 projects/**/infra/environments/**/backend.hcl
 projects/**/infra/environments/**/terraform.tfvars
 projects/**/.terraform.lock.hcl
-
