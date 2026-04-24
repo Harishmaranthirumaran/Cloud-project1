@@ -1,6 +1,53 @@
 # AWS Project Pack
 
-This repository is now organized as a pack of separate AWS project folders.
+This repository is a practical project pack built from the ideas in two cloned
+learning roadmaps:
+
+- [`60DaysToCloud`](60DaysToCloud-source): a 60-day weekly cloud foundations curriculum.
+- [`cloud-skills-roadmap`](cloud-skills-roadmap-source): a longer month-by-month cloud, DevOps, hybrid infrastructure, AI, and interview roadmap.
+
+Those source repos are learning guides: notes, links, checklists, and project
+directions. This repo turns those topics into standalone portfolio projects with
+Terraform, app scaffolds, docs, runbooks, and deployment patterns.
+
+## Source vs This Project Pack
+
+| Area | `60DaysToCloud-source/` | `cloud-skills-roadmap-source/` | `projects/` in this repo |
+| --- | --- | --- | --- |
+| Purpose | Learn cloud concepts across 60 days | Build job-ready cloud, DevOps, hybrid, AI, and interview skills over months | Build demonstrable cloud portfolio projects |
+| Structure | Week-by-week curriculum folders | Month-by-month roadmap folders plus advanced skills and resources | Numbered project folders, each with its own scope |
+| Content style | Notes, links, checklists, and study guidance | Longer roadmap, project prompts, interview prep, certifications, and resource banks | Real project starters with infra, app code, docs, and operations notes |
+| Best use | Follow the fast foundations path | Use as the broader career roadmap and project inspiration source | Pick a project, implement it, deploy it, and document the outcome |
+| Output | Knowledge and practice direction | Skill plan, project ideas, interview preparation, and learning resources | GitHub-ready portfolio artifacts |
+
+The source repos are useful as roadmaps. These new project folders are the
+hands-on implementations you can use to prove the skills from those roadmaps.
+
+## Repository Layout
+
+```text
+.
++-- 60DaysToCloud-source/        # Cloned reference curriculum from GitHub
++-- cloud-skills-roadmap-source/ # Cloned month-by-month skills roadmap
++-- projects/                    # New standalone AWS project pack
+|   +-- 01-static-website-platform/
+|   +-- 02-ecs-fargate-app/
+|   +-- ...
+|   +-- 31-multi-region-backup-drill-platform/
++-- .github/                     # Repo-level PR templates and automation
++-- README.md                    # This guide
+```
+
+## Project Tracks
+
+| Track | Folders | Focus |
+| --- | --- | --- |
+| Foundational delivery | `01` to `03` | Static hosting, containers, serverless, and event-driven basics |
+| Governance and platform engineering | `04` to `07` | Landing zones, EKS, observability, and internal developer platforms |
+| Senior portfolio projects | `08` to `13` | AIOps, guardrails, resilience, integration, data, and global delivery |
+| Tooling and delivery | `14` to `18` | GitOps, Terraform blueprints, Ansible, Jenkins, and Maven delivery |
+| Core AWS control plane | `19` to `24` | S3 governance, networking, KMS/secrets, policy-as-code, IAM, and backup |
+| Advanced platform themes | `25` to `31` | Edge security, managed data, orchestration, streaming, zero trust, FinOps, and DR drills |
 
 ## Projects
 
@@ -30,23 +77,79 @@ This repository is now organized as a pack of separate AWS project folders.
 | [`projects/22-policy-as-code-security-gates`](projects/22-policy-as-code-security-gates) | Policy as Code Security Gates | DevSecOps Engineer | OPA/Conftest-style checks, Terraform policy rules, and pipeline enforcement. |
 | [`projects/23-iam-identity-boundary-platform`](projects/23-iam-identity-boundary-platform) | IAM Identity Boundary Platform | Cloud Security / IAM Engineer | Least-privilege roles, permission boundaries, OIDC, and access patterns. |
 | [`projects/24-backup-restore-governance-platform`](projects/24-backup-restore-governance-platform) | Backup and Restore Governance Platform | Senior Cloud / Reliability Engineer | AWS Backup, restore validation, S3 protections, and operational recovery patterns. |
+| [`projects/25-edge-delivery-security-platform`](projects/25-edge-delivery-security-platform) | Edge Delivery Security Platform | Cloud Security / Platform Engineer | CloudFront, WAF, ACM, Route 53, and ALB as a global edge delivery story. |
+| [`projects/26-managed-data-platform`](projects/26-managed-data-platform) | Managed Data Platform | Senior Data / Platform Engineer | RDS, Aurora, DynamoDB, ElastiCache, and OpenSearch in one governed data stack. |
+| [`projects/27-deep-systems-orchestration-platform`](projects/27-deep-systems-orchestration-platform) | Deep Systems Orchestration Platform | Senior Cloud / Platform Engineer | ECS, EKS, Lambda, Step Functions, and EventBridge for mixed-compute orchestration. |
+| [`projects/28-event-streaming-analytics-platform`](projects/28-event-streaming-analytics-platform) | Event Streaming Analytics Platform | Senior Data / Platform Engineer | Kinesis, Firehose, Lambda, Glue, Athena, and OpenSearch for near-real-time analytics. |
+| [`projects/29-zero-trust-workforce-access-platform`](projects/29-zero-trust-workforce-access-platform) | Zero Trust Workforce Access Platform | Cloud Security / IAM Engineer | Identity Center, Verified Access, Client VPN, and audit controls for internal access. |
+| [`projects/30-cloud-cost-intelligence-platform`](projects/30-cloud-cost-intelligence-platform) | Cloud Cost Intelligence Platform | FinOps / Platform Engineer | CUR, Athena, QuickSight, Budgets, and SNS for spend visibility and response. |
+| [`projects/31-multi-region-backup-drill-platform`](projects/31-multi-region-backup-drill-platform) | Multi-Region Backup Drill Platform | Senior Cloud / Reliability Engineer | AWS Backup, restore drills, cross-region copy, and recovery evidence. |
 
-## Current status
+## How To Work On This Repo
 
-- Project 1 is the most complete implementation and includes full Terraform, docs, workflow templates, remote state bootstrap, WAF, and environment examples.
-- Projects 4 through 24 now include Terraform entrypoints, platform scaffolds, deployment pipelines, or policy automation in addition to their briefs and supporting docs.
-- The new projects emphasize senior-level AWS DevOps and AIOps themes: security guardrails, incident automation, resilience, event-driven integration, data platforms, and global delivery.
-- The added projects extend the showcase into Kubernetes, Terraform modular design, Ansible, Jenkins, Maven-based Java delivery, storage governance, network foundations, KMS/secrets, policy-as-code, IAM boundaries, and backup governance.
+1. Use `60DaysToCloud-source/` when you want a fast weekly learning sequence for a topic.
+2. Use `cloud-skills-roadmap-source/` when you want a longer role-focused roadmap, hybrid/AI direction, resources, or interview preparation.
+3. Use `projects/` when you want to build something portfolio-ready from those topics.
+4. Pick one project folder and read its `README.md`.
+5. Review the project docs, usually under `docs/`, before touching infrastructure.
+6. Copy `terraform.tfvars.example` to `terraform.tfvars` only inside the project you are working on.
+7. Run Terraform from the project infrastructure folder, usually `infra/`.
+8. Commit each meaningful milestone separately: scaffold, infrastructure, app, CI/CD, docs, and cleanup.
 
-## How to use this repo
+Typical Terraform workflow:
 
-1. Open the project folder you want to work on.
-2. Read that folder’s `README.md`.
-3. Copy its prompt into Claude to generate or extend the project in phases.
-4. Commit each milestone separately.
+```bash
+cd projects/01-static-website-platform/infra
+terraform init
+terraform fmt -recursive
+terraform validate
+terraform plan
+terraform apply
+```
 
-## Repo conventions
+Use the same pattern for other project folders that contain an `infra/` or
+`platform/` directory.
+
+## What Changed From The Old Files
+
+- The old files in `60DaysToCloud-source/` are mostly weekly README files.
+- The old files in `cloud-skills-roadmap-source/` are mostly monthly roadmap README files, advanced skills notes, resources, and project prompts.
+- The new files under `projects/` are implementation-oriented and split by portfolio project.
+- The new structure adds Terraform roots, example variables, runbooks, architecture notes, app scaffolds, CI/CD examples, and policy/security examples.
+- The project pack is no longer just a study guide. It is meant to produce deployable examples and interview-ready walkthroughs.
+- Each project is independent, so you can build one project without completing every previous folder.
+
+## How The Roadmaps Map To Projects
+
+| Roadmap topic | Best project folders |
+| --- | --- |
+| Cloud foundations and first deployment | `01-static-website-platform`, `02-ecs-fargate-app` |
+| Infrastructure as Code and Terraform modules | `04-landing-zone-starter`, `15-terraform-blueprint-registry`, `20-vpc-network-foundation-platform` |
+| Configuration automation | `16-ansible-ops-automation` |
+| Containers and orchestration | `02-ecs-fargate-app`, `05-eks-platform-starter`, `14-kubernetes-gitops-platform`, `27-deep-systems-orchestration-platform` |
+| Monitoring and observability | `06-observability-platform`, `08-ai-ops-incident-copilot` |
+| CI/CD pipelines | `17-jenkins-cicd-pipeline-factory`, `18-maven-cloud-service` |
+| Cloud security and guardrails | `09-multi-account-security-guardrails`, `21-kms-encryption-and-secrets-platform`, `22-policy-as-code-security-gates`, `23-iam-identity-boundary-platform`, `25-edge-delivery-security-platform`, `29-zero-trust-workforce-access-platform` |
+| Hybrid, AI, and RAG-inspired systems | `08-ai-ops-incident-copilot`, `27-deep-systems-orchestration-platform` |
+| Cost optimization and FinOps | `30-cloud-cost-intelligence-platform` |
+| Incident thinking, resilience, and recovery | `10-disaster-recovery-resilience-platform`, `24-backup-restore-governance-platform`, `31-multi-region-backup-drill-platform` |
+
+## Recommended Path
+
+Start with `01-static-website-platform` for the fastest end-to-end AWS result.
+Then move through `02` and `03` for containers and serverless. After that, pick
+projects based on the role you want to target:
+
+- DevOps: `02`, `05`, `14`, `16`, `17`, `18`
+- Cloud platform: `04`, `07`, `15`, `20`, `27`
+- Security: `09`, `21`, `22`, `23`, `25`, `29`
+- SRE and resilience: `06`, `10`, `24`, `31`
+- Data and FinOps: `12`, `26`, `28`, `30`
+
+## Repo Conventions
 
 - Each project lives in its own folder under `projects/`.
-- Each project folder has its own keynote, README, and starter structure.
-- Repo-level templates live in the root `.github/` directory.
+- Each project should have a `README.md` with scope, architecture, usage, and next steps.
+- Infrastructure examples should keep secrets out of git and use `terraform.tfvars.example` for placeholders.
+- Project docs should explain decisions, operations, cost, security, and failure handling where relevant.
+- The cloned `60DaysToCloud-source/` and `cloud-skills-roadmap-source/` folders are reference material. Do not edit them unless you intentionally want to update those source copies.
