@@ -49,14 +49,14 @@ data "aws_iam_policy_document" "task_execution_assume_role" {
 }
 
 locals {
-  prefix           = "${var.project_name}-${var.environment_name}"
-  resource_prefix  = lower(replace(local.prefix, "_", "-"))
-  hosted_zone_id   = var.hosted_zone_id != "" ? var.hosted_zone_id : try(data.aws_route53_zone.site[0].zone_id, "")
-  domain_enabled   = var.domain_name != "" && local.hosted_zone_id != ""
-  image_uri        = "${aws_ecr_repository.sample_api.repository_url}:${var.image_tag}"
-  public_subnets   = var.public_subnet_cidrs
-  task_name        = "${local.resource_prefix}-sample-api"
-  service_name     = "${local.resource_prefix}-sample-api"
+  prefix          = "${var.project_name}-${var.environment_name}"
+  resource_prefix = lower(replace(local.prefix, "_", "-"))
+  hosted_zone_id  = var.hosted_zone_id != "" ? var.hosted_zone_id : try(data.aws_route53_zone.site[0].zone_id, "")
+  domain_enabled  = var.domain_name != "" && local.hosted_zone_id != ""
+  image_uri       = "${aws_ecr_repository.sample_api.repository_url}:${var.image_tag}"
+  public_subnets  = var.public_subnet_cidrs
+  task_name       = "${local.resource_prefix}-sample-api"
+  service_name    = "${local.resource_prefix}-sample-api"
 }
 
 resource "aws_vpc" "this" {
@@ -387,8 +387,8 @@ resource "aws_ecs_service" "sample_api" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = aws_subnet.public[*].id
-    security_groups = [aws_security_group.tasks.id]
+    subnets          = aws_subnet.public[*].id
+    security_groups  = [aws_security_group.tasks.id]
     assign_public_ip = true
   }
 
@@ -524,9 +524,9 @@ resource "aws_route53_record" "site_ipv6" {
 }
 
 resource "aws_iam_openid_connect_provider" "github" {
-  count          = var.github_repo != "" ? 1 : 0
-  url            = "https://token.actions.githubusercontent.com"
-  client_id_list = ["sts.amazonaws.com"]
+  count           = var.github_repo != "" ? 1 : 0
+  url             = "https://token.actions.githubusercontent.com"
+  client_id_list  = ["sts.amazonaws.com"]
   thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1"]
 }
 

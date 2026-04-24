@@ -1,12 +1,12 @@
 package terraform.guardrails
 
-deny[msg] {
+deny contains msg if {
   input.resource_type == "aws_s3_bucket"
   input.public == true
   msg := "S3 buckets must not be public"
 }
 
-deny[msg] {
+deny contains msg if {
   input.resource_type == "aws_security_group"
   input.ingress[_].cidr == "0.0.0.0/0"
   input.ingress[_].from_port == 22

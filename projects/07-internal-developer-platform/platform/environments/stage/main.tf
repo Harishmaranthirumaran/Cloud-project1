@@ -4,7 +4,7 @@ module "platform" {
   environment_name    = var.environment_name
   aws_region          = var.aws_region
   vpc_cidr            = var.vpc_cidr
-  public_subnet_cidrs  = var.public_subnet_cidrs
+  public_subnet_cidrs = var.public_subnet_cidrs
   container_port      = var.container_port
   task_cpu            = var.task_cpu
   task_memory         = var.task_memory

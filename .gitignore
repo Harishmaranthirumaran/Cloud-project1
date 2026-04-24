@@ -3,6 +3,7 @@
 coverage/
 dist/
 build/
+target/
 node_modules/
 __pycache__/
 .terraform/

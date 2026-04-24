@@ -1,7 +1,7 @@
 locals {
   workspace_name   = terraform.workspace == "default" ? var.environment_name : terraform.workspace
   resource_prefix  = lower(replace("${var.project_name}-${local.workspace_name}", "_", "-"))
-  site_bucket_name  = lower(replace("${local.resource_prefix}-${random_id.suffix.hex}", "_", "-"))
+  site_bucket_name = lower(replace("${local.resource_prefix}-${random_id.suffix.hex}", "_", "-"))
   domain_enabled   = var.domain_name != "" && (var.hosted_zone_id != "" || var.hosted_zone_name != "")
   hosted_zone_id   = var.hosted_zone_id != "" ? var.hosted_zone_id : try(data.aws_route53_zone.site[0].zone_id, "")
 }
@@ -57,8 +57,8 @@ resource "aws_cloudfront_origin_access_control" "site" {
 }
 
 data "aws_route53_zone" "site" {
-  count = var.hosted_zone_name != "" && var.hosted_zone_id == "" ? 1 : 0
-  name  = trimsuffix(var.hosted_zone_name, ".")
+  count        = var.hosted_zone_name != "" && var.hosted_zone_id == "" ? 1 : 0
+  name         = trimsuffix(var.hosted_zone_name, ".")
   private_zone = false
 }
 
@@ -125,7 +125,7 @@ resource "aws_wafv2_web_acl" "site" {
     visibility_config {
       cloudwatch_metrics_enabled = true
       metric_name                = "${local.resource_prefix}-common"
-      sampled_requests_enabled    = true
+      sampled_requests_enabled   = true
     }
   }
 
@@ -147,14 +147,14 @@ resource "aws_wafv2_web_acl" "site" {
     visibility_config {
       cloudwatch_metrics_enabled = true
       metric_name                = "${local.resource_prefix}-rate-limit"
-      sampled_requests_enabled    = true
+      sampled_requests_enabled   = true
     }
   }
 
   visibility_config {
     cloudwatch_metrics_enabled = true
     metric_name                = "${local.resource_prefix}-waf"
-    sampled_requests_enabled    = true
+    sampled_requests_enabled   = true
   }
 }
 
@@ -216,7 +216,7 @@ resource "aws_acm_certificate_validation" "site" {
   provider                = aws.us_east_1
   count                   = local.domain_enabled ? 1 : 0
   certificate_arn         = aws_acm_certificate.site[0].arn
-  validation_record_fqdns  = [for record in aws_route53_record.acm_validation : record.fqdn]
+  validation_record_fqdns = [for record in aws_route53_record.acm_validation : record.fqdn]
 }
 
 resource "aws_cloudfront_distribution" "site" {
@@ -229,15 +229,15 @@ resource "aws_cloudfront_distribution" "site" {
   origin {
     domain_name              = aws_s3_bucket.site.bucket_regional_domain_name
     origin_id                = "s3-site-origin"
-    origin_access_control_id  = aws_cloudfront_origin_access_control.site.id
+    origin_access_control_id = aws_cloudfront_origin_access_control.site.id
   }
 
   default_cache_behavior {
-    allowed_methods        = ["GET", "HEAD", "OPTIONS"]
-    cached_methods         = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id       = "s3-site-origin"
-    viewer_protocol_policy = "redirect-to-https"
-    compress               = true
+    allowed_methods            = ["GET", "HEAD", "OPTIONS"]
+    cached_methods             = ["GET", "HEAD", "OPTIONS"]
+    target_origin_id           = "s3-site-origin"
+    viewer_protocol_policy     = "redirect-to-https"
+    compress                   = true
     response_headers_policy_id = aws_cloudfront_response_headers_policy.site.id
 
     forwarded_values {

@@ -65,9 +65,12 @@ resource "aws_route53_record" "primary" {
   type            = "CNAME"
   ttl             = 60
   set_identifier  = "primary"
-  failover        = "PRIMARY"
   health_check_id = aws_route53_health_check.primary.id
   records         = [var.primary_endpoint_fqdn]
+
+  failover_routing_policy {
+    type = "PRIMARY"
+  }
 }
 
 resource "aws_route53_record" "secondary" {
@@ -76,7 +79,10 @@ resource "aws_route53_record" "secondary" {
   type            = "CNAME"
   ttl             = 60
   set_identifier  = "secondary"
-  failover        = "SECONDARY"
   health_check_id = aws_route53_health_check.secondary.id
   records         = [var.secondary_endpoint_fqdn]
+
+  failover_routing_policy {
+    type = "SECONDARY"
+  }
 }
