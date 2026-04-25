@@ -1,0 +1,5 @@
+project_name        = "managed-data-platform"
+aws_region          = "ap-south-1"
+environment_name    = "dev"
+database_engine     = "aurora-postgresql"
+search_engine_version = "OpenSearch_2.11"

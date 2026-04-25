@@ -1,0 +1,5 @@
+project_name          = "zero-trust-workforce-access-platform"
+aws_region            = "ap-south-1"
+environment_name      = "dev"
+access_mode           = "verified-access"
+identity_provider_name = "identity-center"

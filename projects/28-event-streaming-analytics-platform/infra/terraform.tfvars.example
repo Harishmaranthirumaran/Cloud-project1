@@ -1,0 +1,5 @@
+project_name     = "event-streaming-analytics-platform"
+aws_region       = "ap-south-1"
+environment_name = "dev"
+retention_days   = 30
+stream_mode      = "kinesis"

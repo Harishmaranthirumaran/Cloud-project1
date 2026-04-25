@@ -1,0 +1,5 @@
+project_name              = "cloud-cost-intelligence-platform"
+aws_region                = "ap-south-1"
+environment_name          = "dev"
+budget_threshold_percent   = 80
+report_frequency          = "daily"

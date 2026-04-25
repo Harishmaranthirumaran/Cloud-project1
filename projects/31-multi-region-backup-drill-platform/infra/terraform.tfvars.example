@@ -1,0 +1,5 @@
+project_name            = "multi-region-backup-drill-platform"
+aws_region              = "ap-south-1"
+secondary_region        = "us-west-2"
+environment_name        = "dev"
+recovery_objective_hours = 4

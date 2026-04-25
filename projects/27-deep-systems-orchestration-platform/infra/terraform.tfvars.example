@@ -1,0 +1,4 @@
+project_name      = "deep-systems-orchestration-platform"
+aws_region        = "ap-south-1"
+environment_name  = "dev"
+cluster_name      = "orchestration"
